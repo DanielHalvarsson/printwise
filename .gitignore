@@ -1,0 +1,9 @@
+# Claude Code local settings (contains local file paths)
+.claude/
+
+# Runtime logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

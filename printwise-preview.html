@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrintWise — Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --page-bg: #faf8f3;
+      --text-primary: #1c1915;
+      --text-secondary: #6b6560;
+      --text-muted: #a09890;
+      --accent: #8b4513;
+      --rule-color: #d8d2c8;
+      --rule-dark: #2a2520;
+      --blockquote-bg: #f3f0e8;
+      --link-color: #6b4423;
+      --body-font: 'Source Serif 4', Georgia, serif;
+      --display-font: 'Cormorant Garamond', 'Georgia', serif;
+      --ui-font: 'DM Sans', system-ui, sans-serif;
+      --content-width: 38em;
+      --body-size: 17.5px;
+      --leading: 1.72;
+    }
+
+    html {
+      font-size: var(--body-size);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      font-family: var(--body-font);
+      line-height: var(--leading);
+      color: var(--text-primary);
+      background: var(--page-bg);
+    }
+
+    .toolbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250, 248, 243, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule-color);
+      padding: 0 32px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--ui-font);
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toolbar-logo {
+      width: 24px; height: 24px;
+      background: var(--rule-dark);
+      border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--page-bg);
+      font-family: var(--display-font);
+      font-size: 14px; font-weight: 600;
+    }
+
+    .toolbar-brand {
+      font-family: var(--display-font);
+      font-size: 16px; font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+    .toolbar-brand span { color: var(--text-muted); font-weight: 400; }
+
+    .toolbar-actions { display: flex; gap: 8px; align-items: center; }
+
+    .toolbar-btn {
+      height: 34px; padding: 0 16px;
+      border: 1.5px solid var(--rule-color);
+      border-radius: 7px;
+      background: transparent;
+      font-family: var(--ui-font);
+      font-size: 12.5px; font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .toolbar-btn:hover { background: var(--text-primary); color: var(--page-bg); border-color: var(--text-primary); }
+    .toolbar-btn svg { width: 14px; height: 14px; }
+    .toolbar-btn.primary { background: var(--text-primary); color: var(--page-bg); border-color: var(--text-primary); }
+    .toolbar-btn.primary:hover { background: #3d362f; }
+
+    .source-link {
+      font-size: 11px; color: var(--text-muted); text-decoration: none;
+      transition: color 0.15s;
+    }
+    .source-link:hover { color: var(--text-secondary); }
+
+    .page {
+      max-width: var(--content-width);
+      margin: 0 auto;
+      padding: 100px 24px 120px;
+    }
+
+    .article-header { margin-bottom: 3rem; }
+    .article-header::after {
+      content: ''; display: block;
+      width: 48px; height: 2.5px;
+      background: var(--rule-dark);
+      margin-top: 2rem;
+    }
+
+    .article-title {
+      font-family: var(--display-font);
+      font-size: 2.85rem; font-weight: 600;
+      line-height: 1.12; letter-spacing: -0.025em;
+      color: var(--text-primary);
+      margin-bottom: 1.1rem;
+      text-wrap: balance;
+    }
+
+    .article-meta {
+      font-family: var(--ui-font);
+      font-size: 0.78rem; color: var(--text-secondary);
+      display: flex; flex-wrap: wrap;
+      gap: 0.4rem 1.2rem; align-items: baseline;
+    }
+    .article-meta .author { font-weight: 500; color: var(--text-primary); }
+    .article-meta .separator { color: var(--rule-color); }
+
+    .article-body {
+      font-variant-ligatures: common-ligatures;
+      hanging-punctuation: first allow-end last;
+    }
+
+    .article-body p { margin-bottom: 1.15em; orphans: 3; widows: 3; }
+
+    .article-body > p:first-of-type::first-letter {
+      font-family: var(--display-font);
+      font-weight: 700; font-size: 3.6em;
+      float: left; line-height: 0.78;
+      margin-right: 0.08em; margin-top: 0.06em;
+      color: var(--text-primary);
+    }
+
+    .article-body h2 {
+      font-family: var(--display-font);
+      font-size: 1.55rem; font-weight: 600;
+      line-height: 1.25; letter-spacing: -0.01em;
+      margin: 2.2rem 0 0.85rem;
+    }
+
+    .article-body blockquote {
+      margin: 1.8rem 0; padding: 1.3rem 1.6rem;
+      border-left: 3px solid var(--accent);
+      background: var(--blockquote-bg);
+      border-radius: 0 6px 6px 0;
+      font-style: italic;
+    }
+    .article-body blockquote p { margin-bottom: 0.5em; }
+    .article-body blockquote p:last-child { margin-bottom: 0; }
+
+    .article-body hr {
+      border: none; height: 1px;
+      background: var(--rule-color);
+      margin: 2.5rem auto; max-width: 120px;
+    }
+
+    .article-body strong { font-weight: 600; }
+    .article-body em { font-style: italic; }
+
+    .article-body a {
+      color: var(--link-color);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(107, 68, 35, 0.3);
+    }
+
+    .reader-footer {
+      margin-top: 4rem; padding-top: 1.5rem;
+      border-top: 1px solid var(--rule-color);
+      font-family: var(--ui-font);
+      font-size: 0.68rem; color: var(--text-muted);
+      display: flex; justify-content: space-between;
+    }
+
+    .article-header, .article-body {
+      animation: fadeUp 0.5s ease-out both;
+    }
+    .article-body { animation-delay: 0.1s; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Preview banner */
+    .preview-banner {
+      position: fixed;
+      bottom: 24px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--rule-dark);
+      color: var(--page-bg);
+      font-family: var(--ui-font);
+      font-size: 12px; font-weight: 500;
+      padding: 10px 20px;
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      z-index: 200;
+      letter-spacing: 0.02em;
+    }
+
+    @media print {
+      .toolbar, .preview-banner { display: none !important; }
+      html { font-size: 11.5pt; }
+      body { background: white; color: black; }
+      .page { max-width: none; padding: 0; margin: 0; }
+      .article-header::after { background: black; height: 2px; width: 40px; margin-top: 1.5rem; }
+      .article-title { font-size: 2.2rem; color: black; }
+      .article-body blockquote { background: none; border-left: 2.5px solid #333; padding: 0.5rem 1.2rem; }
+      .article-body a { color: black; text-decoration: none; }
+      @page { margin: 2cm 2.4cm; size: A4; }
+      @page :first { margin-top: 3cm; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <div class="toolbar-logo">P</div>
+      <div class="toolbar-brand">Print<span>Wise</span></div>
+      <a class="source-link" href="#">marginalrevolution.com</a>
+    </div>
+    <div class="toolbar-actions">
+      <button class="toolbar-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy
+      </button>
+      <button class="toolbar-btn primary" onclick="window.print()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print
+      </button>
+    </div>
+  </div>
+
+  <div class="page">
+    <article>
+      <header class="article-header">
+        <h1 class="article-title">The Market for AI Infrastructure Is Larger Than Most People Think</h1>
+        <div class="article-meta">
+          <span class="author">Tyler Cowen</span>
+          <span class="separator">·</span>
+          <span>March 24, 2026</span>
+          <span class="separator">·</span>
+          <span>marginalrevolution.com</span>
+        </div>
+      </header>
+
+      <div class="article-body">
+        <p>There is a common assumption in the technology discourse that AI infrastructure is simply about training ever-larger language models and deploying them through APIs. This framing misses the far more interesting development happening at the margins: researchers and practitioners building <em>coordination systems</em> that turn individual AI capabilities into persistent, autonomous workflows.</p>
+
+        <p>Consider what this actually means. The difference between a tool you consult and a colleague who monitors, acts, and coordinates is not merely one of degree — it is a difference in kind. A tool requires you to formulate the question. A colleague notices when a question needs asking.</p>
+
+        <h2>The Hayekian Parallel</h2>
+
+        <p>The best way to understand these emerging systems is through the lens of distributed coordination theory. Hayek's insight about the price system — that it aggregates dispersed local knowledge into signals no central planner could compute — applies directly to multi-agent architectures. Each agent possesses local context (an inbox, a calendar, a codebase) that would overwhelm a monolithic system. The question is how they coordinate.</p>
+
+        <blockquote>
+          <p>The curious task of economics is to demonstrate to men how little they really know about what they imagine they can design.</p>
+        </blockquote>
+
+        <p>This is not merely an analogy. The mechanism design problems are formally identical: how do you create protocols that incentivize truthful information sharing between agents with different objectives and different information sets?</p>
+
+        <h2>What This Means for Productivity Research</h2>
+
+        <p>For those of us studying firm-level productivity, the implications are significant. We have excellent data on how firms adopt technologies — the Swedish employer-employee matched datasets, for instance, allow us to observe adoption, workforce composition changes, and productivity outcomes simultaneously. But the current wave is different from ERP adoption or cloud migration in a fundamental way: the technology is adaptive.</p>
+
+        <p>A firm deploying an AI coordination system does not merely automate a process. It creates a new information channel within the firm — one that learns, monitors, and acts. The measurement challenge here is non-trivial, and frankly most of the existing productivity literature is not equipped for it.</p>
+
+        <hr>
+
+        <p>The bottom line: watch the infrastructure layer, not the model releases. The interesting economic effects will come from persistent AI systems that participate in organizational coordination, not from chatbots that answer questions marginally better than last quarter's version.</p>
+      </div>
+
+      <footer class="reader-footer">
+        <span>Prepared by PrintWise</span>
+        <span>March 26, 2026</span>
+      </footer>
+    </article>
+  </div>
+
+  <div class="preview-banner">
+    This is a preview of PrintWise output — the actual extension works on any live webpage
+  </div>
+
+</body>
+</html>
