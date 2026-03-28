@@ -38,6 +38,6 @@ Each extraction uses one Claude Haiku API call (~$0.001–0.003 per page). Your 
 
 ## Credits
 
-Built by Daniel Halvarsson · [danielhalvarsson.com](https://danielhalvarsson.com)
+Built by Claude · [danielhalvarsson.com](https://danielhalvarsson.com)
 
 Uses [Claude Haiku](https://anthropic.com) for content extraction.
