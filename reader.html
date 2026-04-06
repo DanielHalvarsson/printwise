@@ -144,6 +144,18 @@
       background: #3d362f;
     }
 
+    .toolbar-btn.success {
+      background: #ede5d8;
+      border-color: #d8d2c8;
+      color: var(--text-primary);
+    }
+
+    .toolbar-btn.success:hover {
+      background: #e1d5c1;
+      border-color: #c9bda8;
+      color: var(--text-primary);
+    }
+
     .source-link {
       font-size: 11px;
       color: var(--text-muted);
@@ -536,6 +548,10 @@
       <a class="source-link" id="sourceLink" href="#" target="_blank" rel="noopener"></a>
     </div>
     <div class="toolbar-actions">
+      <button class="toolbar-btn success" id="saveToWikiBtn" title="Save to Wiki">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 0 4 24V4.5A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Save to Wiki
+      </button>
       <button class="toolbar-btn" id="copyBtn" title="Copy to clipboard">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
         Copy

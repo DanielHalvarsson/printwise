@@ -2,9 +2,45 @@ document.addEventListener('DOMContentLoaded', async () => {
   const pageTitle = document.getElementById('pageTitle');
   const extractBtn = document.getElementById('extractBtn');
   const mainStatus = document.getElementById('mainStatus');
+  const fragmentdUrlInput = document.getElementById('fragmentdUrl');
+  const fragmentdTokenInput = document.getElementById('fragmentdToken');
+  const wikiVaultPathInput = document.getElementById('wikiVaultPath');
+  const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+  const settingsStatus = document.getElementById('settingsStatus');
+
+  const {
+    fragmentd_url: fragmentdUrl = 'http://127.0.0.1:7331',
+    fragmentd_token: fragmentdToken = '',
+    wiki_vault_path: wikiVaultPath = '/home/server_lama/obsidian-vault',
+  } = await chrome.storage.local.get([
+    'fragmentd_url',
+    'fragmentd_token',
+    'wiki_vault_path',
+  ]);
+
+  fragmentdUrlInput.value = fragmentdUrl;
+  fragmentdTokenInput.value = fragmentdToken;
+  wikiVaultPathInput.value = wikiVaultPath;
 
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   pageTitle.textContent = tab?.title || 'Unknown page';
+
+  saveSettingsBtn.addEventListener('click', async () => {
+    settingsStatus.textContent = 'Saving…';
+    settingsStatus.className = 'status';
+
+    try {
+      await chrome.storage.local.set({
+        fragmentd_url: fragmentdUrlInput.value.trim() || 'http://127.0.0.1:7331',
+        fragmentd_token: fragmentdTokenInput.value.trim(),
+        wiki_vault_path: wikiVaultPathInput.value.trim() || '/home/server_lama/obsidian-vault',
+      });
+      settingsStatus.textContent = 'Settings saved';
+    } catch (err) {
+      settingsStatus.textContent = err.message || 'Failed to save settings';
+      settingsStatus.className = 'status error';
+    }
+  });
 
   extractBtn.addEventListener('click', async () => {
     extractBtn.classList.add('processing');
@@ -44,6 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       await chrome.storage.local.set({
         readerData: {
           content: response.content,
+          markdown: response.markdown || '',
           title: response.title,
           author: response.author,
           date: response.date,

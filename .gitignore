@@ -4,6 +4,13 @@
 # Runtime logs
 *.log
 
+# Python cache
+__pycache__/
+*.pyc
+
+# Internal planning docs
+wiki-update.md
+
 # OS
 .DS_Store
 Thumbs.db

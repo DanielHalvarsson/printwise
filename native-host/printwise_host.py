@@ -37,7 +37,8 @@ OUTPUT FORMAT — respond with ONLY this JSON, no markdown fences, no preamble:
 {"title":"The article title","author":"Author name or null","date":"Publication date or null",\
 "content":"Full article in clean HTML using only: \
 <h1> <h2> <h3> <p> <blockquote> <ul> <ol> <li> <em> <strong> <a href=\\"...\\"> \
-<hr> <figure> <figcaption>. Every paragraph must be wrapped in <p> tags."}"""
+<hr> <figure> <figcaption>. Every paragraph must be wrapped in <p> tags.",\
+"markdown":"The same article as clean Markdown with headings, paragraphs, lists, blockquotes, links, and horizontal rules preserved."}"""
 
 
 def find_claude():
@@ -135,10 +136,14 @@ def main():
             'content': '\n'.join(
                 f'<p>{p.strip()}</p>' for p in raw.split('\n') if p.strip()
             ),
+            'markdown': '\n\n'.join(
+                p.strip() for p in raw.split('\n') if p.strip()
+            ),
         }
 
     send_message({
         'content': parsed.get('content', ''),
+        'markdown': parsed.get('markdown') or '',
         'title': parsed.get('title') or title,
         'author': parsed.get('author'),
         'date': parsed.get('date'),

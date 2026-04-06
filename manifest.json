@@ -4,6 +4,10 @@
   "version": "1.0.0",
   "description": "AI-powered clean reading & printing. Strips junk, keeps meaning, produces beautiful typeset output.",
   "permissions": ["activeTab", "scripting", "storage", "nativeMessaging"],
+  "host_permissions": [
+    "http://127.0.0.1:7331/*",
+    "http://localhost:7331/*"
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {

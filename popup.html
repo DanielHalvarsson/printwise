@@ -123,6 +123,63 @@
 
     .status.error { color: #c44; }
 
+    .settings {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid #e8e2da;
+    }
+
+    .settings-title {
+      font-size: 11px;
+      color: #8a8078;
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .settings label {
+      display: block;
+      font-size: 12px;
+      color: #5c534c;
+      margin-bottom: 6px;
+    }
+
+    .settings input {
+      width: 100%;
+      padding: 10px 11px;
+      border: 1px solid #d8d2c8;
+      border-radius: 7px;
+      margin-bottom: 10px;
+      background: #fffdf9;
+      color: #2a2520;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+    }
+
+    .settings input:focus {
+      outline: none;
+      border-color: #8b7662;
+      box-shadow: 0 0 0 3px rgba(139, 118, 98, 0.12);
+    }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 10px;
+      background: transparent;
+      color: #2a2520;
+      border: 1px solid #cfc6bb;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: #f1ece4;
+    }
+
     .processing .btn-text { visibility: hidden; }
     .processing .spinner { display: block; }
 
@@ -160,6 +217,18 @@
       <div class="spinner"></div>
     </button>
     <div class="status" id="mainStatus"></div>
+
+    <div class="settings">
+      <div class="settings-title">Wiki Integration</div>
+      <label for="fragmentdUrl">fragmentd URL</label>
+      <input type="text" id="fragmentdUrl" placeholder="http://127.0.0.1:7331">
+      <label for="fragmentdToken">fragmentd Token</label>
+      <input type="password" id="fragmentdToken" placeholder="Your fragmentd token">
+      <label for="wikiVaultPath">Vault Path</label>
+      <input type="text" id="wikiVaultPath" placeholder="/home/server_lama/obsidian-vault">
+      <button class="btn-secondary" id="saveSettingsBtn">Save Wiki Settings</button>
+      <div class="status" id="settingsStatus"></div>
+    </div>
   </div>
 
   <script src="popup.js"></script>
